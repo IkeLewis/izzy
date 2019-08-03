@@ -21,4 +21,4 @@ RUN apt-get update && \
     mkfifo kie-pipe && \
     git clone https://github.com/IkeLewis/izzy.git
 
-ENTRYPOINT [ "/root/izzy-test/docker/test.sh" ]
+ENTRYPOINT [ "/root/izzy-test/izzy/docker/test.sh" ]
