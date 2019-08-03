@@ -9,6 +9,7 @@ fi
 cd /root/izzy-test/izzy/src
 make clean
 make
+make install
 # Does the guile code compile?
 cd /root/izzy-test/izzy/scheme
 izzy/izzy.scm /root/izzy-test/kie-pipe
