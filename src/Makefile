@@ -1,7 +1,8 @@
 shared := libread_ie.so libuinject.so
-mains := test_libs.run
+#mains := test_libs.run
 
-all:  $(shared) $(mains)
+#all:  $(shared) $(mains)
+all:  $(shared)
 
 read_ie3.run:
 	gcc -o read_ie3.run read_ie3.c

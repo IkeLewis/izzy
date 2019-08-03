@@ -1,7 +1,9 @@
 #!/usr/bin/guile \
--L . -L <path-to-site-folder> --fresh-auto-compile -e main -s
+-L . --fresh-auto-compile -e main -s
 !#
 
+;; -L <path-to-site-folder>
+;;
 ;; Don't rely on GUILE_LOAD_PATH b/c you are using different versions
 ;; of GUILE.
 ;; 

@@ -2,7 +2,8 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> /* for memset */
+#include <string.h> // for memset
+#include <unistd.h> // for read
 
 int readIE(int fd, struct input_event * ie) {
 
