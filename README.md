@@ -11,12 +11,28 @@ Licensing
 ---------
 
 Licensing has not yet been established for the project and will depend
-on a variety of factors; most likely, it will be free for non-commercial use.
+on a variety of factors; most likely, it will be free for
+non-commercial use.
+
+Izzy is Complementary to Auto Hot Key (AHK)!
+--------------------------------------------
+
+There has been some confusion about how izzy works.  One of the early
+design goals of izzy is to leverage existing mature input handling
+software like AHK.  Izzy operates at a lower level than AHK and is
+thus entirely complementary to it.  The flow diagram below shows how
+input can be processed on my prototype system:
+
+PS2 Device -\>
+Raw PS/2 Driver -\>
+izzy -\>
+AHK, Emacs, vi, etc
 
 Reviewers
 ---------
 
-This project has been kindly reviewed by __________.
+This project has been kindly reviewed at least in part by Dan S. of
+DXC and David L. of Carbonite.
 
 Notation
 --------
@@ -25,18 +41,20 @@ Notation
 \<key\>  : the key has been pressed and released
 \<key\>* : the key has been released
 
-An Example of How It Currently Works
-------------------------------------
+Ordinary Keys May be Used as Modifiers
+--------------------------------------
 
-On a traditional keyboard, it is possible to use the 'A' key as both a
-control modifier and a non-modifier; when the 'A' key is held and
-another key is pressed and then released, the 'A' key behaves as a
-control modifier. So A_ P A* would be interpreted as ctrl+P.  When the
-'A' key is quickly pressed and then released however, it behaves as an
-ordinary key. If the 'A' key is held down for a long period of time
-and then released, nothing will be entered.  One potential drawback of
-this approach is that the 'A' key can't be held down to enter multiple
-A's.
+On a traditional keyboard, with izzy it is possible to use the 'A' key
+as both a control modifier and a non-modifier; for example, when the
+'A' key is held and another key is pressed and then released, the 'A'
+key behaves as a control modifier. So A_ P A* would be interpreted as
+ctrl+P.  When the 'A' key is quickly pressed and then released
+however, it behaves as an ordinary key. If the 'A' key is held down
+for a long period of time and then released, nothing will be entered.
+One potential drawback of this approach is that the 'A' key can't be
+held down to enter multiple A's.  Instead, a simple key sequence (as
+is used in Emacs) could be used to repeat a key; for example alt_ 1 0
+0 alt* A, could be used to quickly enter 100 A's.
 
 How Input Events are Currently Handled
 --------------------------------------
@@ -67,7 +85,8 @@ appended to the list of handlers.
 Once an input event is received it is placed in the queue.
 The dispatcher removes the first input event from the queue and sends
 it to each handler on the list.
-Each handler can then choose to ignore, observe, or handle the input event.
+Each handler can then choose to ignore, observe, or handle the input
+event.
 
 Key benefits of this approach:
 Multiple applications could receive/respond to the same input event,
@@ -82,16 +101,6 @@ Higher Level Features
 ---------------------
 Support for keymaps and macros could be implemented via separate
 modules.
-
-TODO
-----
-Setup a docker test environment.
-
-Features
---------
-
-Currently logging is supported to the console and support for auditing
-may be added, depending on interest.
 
 Dedication
 ----------
