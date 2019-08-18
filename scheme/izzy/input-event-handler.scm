@@ -12,9 +12,13 @@
 (define-class <input-event-handler> ()
   (main-thread #:init-value #f #:accessor main-thread)
   (repeat-count #:init-value 0 #:accessor repeat-count)
+  ;; list of kernel input events
   (events #:init-value '() #:accessor events)
+  ;; the list of bi-key kernel input events
   (bis #:init-value '() #:accessor bis)
+  ;; list of modifier-key kernel input events
   (ms #:init-value '() #:accessor ms)
+  ;; list of non-modifier-key kernel input events
   (nm #:init-value '() #:accessor nm)
   (sent-keys #:init-value '() #:accessor sent-keys)
   (callback #:accessor callback)
@@ -23,6 +27,7 @@
 
   (only-modifiers #:accessor only-modifiers)
   (bi-keys #:accessor bi-keys)
+  ;; TODO: remove the following line entirely
   (bi-keys-enable-repeat #:init-value #f #:accessor bi-keys-enable-repeat)
   (bi-keys-mod-map #:accessor bi-keys-mod-map))
 
@@ -30,9 +35,13 @@
   (member kie (sent-keys ieh) (lambda (x y) (= (code x)
 					       (code y)))))
 
-(define-method (down-mod-key? (kie <kernel-input-event>) (ieh <input-event-handler>))
-  (member kie (down-mod-keys ieh) (lambda (x y) (= (code x)
-						   (code y)))))
+;; To the best of my knowledge, this was a remnant of an older
+;; notation and is no longer needed; down-mod-keys are now referred to
+;; as bi-keys.
+;;
+;; (define-method (down-mod-key?
+;; 		(kie <kernel-input-event>) (ieh <input-event-handler>)) (member kie
+;; 		(down-mod-keys ieh) (lambda (x y) (= (code x) (code y)))))
 
 (define-method (initialize (obj <input-event-handler>) initargs)
   ;; TODO: add type checking
@@ -51,13 +60,24 @@
   (set! initargs (append! initargs
 			  (list only-modifiers-dflt
 				bi-keys-dflt
-				bi-keys-enable-repeat-dflt
+				;; In early development, the
+				;; possibility of allowing repetitions
+				;; for bi keys was considered, but
+				;; after further experimentation, this
+				;; approach was not pursued because
+				;; more elegant ways of handling
+				;; repetitions exist, namely
+				;; implementing a simple repetition
+				;; command.
+				;; bi-keys-enable-repeat-dflt
 				bi-keys-mod-map-dflt)))
   
   (slot-set! obj 'only-modifiers (fourth initargs))
   (slot-set! obj 'bi-keys (fifth initargs))
-  (slot-set! obj 'bi-keys-enable-repeat (sixth initargs))  
-  (slot-set! obj 'bi-keys-mod-map (seventh initargs)))
+  ;;TODO: remove this comment block after successful testing.
+  ;;(slot-set! obj 'bi-keys-enable-repeat (sixth initargs))
+  ;;(slot-set! obj 'bi-keys-mod-map (seventh initargs))
+  (slot-set! obj 'bi-keys-mod-map (sixth initargs)))
 
 ;;; Defaults
 
@@ -100,16 +120,16 @@
 
 (define-macro (with-convenience-funcs ieh . body)
   ;; TODO: Fix type checking (so that errors are produced when kie is
-  ;; not a <kernel-input-event>
+  ;; not a <kernel-input-event>)
   `(let* ((remove-kie! (lambda* (kie #:optional (pred-fn (lambda (kie1) #t)))
-			 (let ((remove-pred (lambda (kie1 kie2)
-					      (and (equal-codes? kie1 kie2)
-						   (pred-fn kie1)
-						   (pred-fn kie2)))))
-			   (slot-remove! ieh 'ms kie remove-pred)
-			   (slot-remove! ieh 'bis kie remove-pred)
-			   (slot-remove! ieh 'nm kie remove-pred)
-			   (slot-remove! ieh 'events kie remove-pred))))
+				(let ((remove-pred (lambda (kie1 kie2)
+						     (and (equal-codes? kie1 kie2)
+							  (pred-fn kie1)
+							  (pred-fn kie2)))))
+				  (slot-remove! ieh 'ms kie remove-pred)
+				  (slot-remove! ieh 'bis kie remove-pred)
+				  (slot-remove! ieh 'nm kie remove-pred)
+				  (slot-remove! ieh 'events kie remove-pred))))
 	  (events (lambda () (events ieh)))
 	  (le (lambda () (last (events))))
 	  (bis (lambda () (bis ieh)))
@@ -119,16 +139,23 @@
 		     (and (is-a? obj <kernel-input-event>)
 			  (member (code obj) (bi-keys ,ieh)))))
 	  (modifier-only? (lambda (obj)
+			    ;; returns true iff obj is a modifier only kie
 			    (and (is-a? obj <kernel-input-event>)
 				 (member (code obj) (only-modifiers ,ieh)))))
-	  (mod-ie? (lambda (kie) (member kie (ms) equal-codes?)))
+	  (mod-ie? (lambda (kie) 
+		     ;; returns true iff obj is a modifier kie
+		     (member kie (ms) equal-codes?)))
 
 	  (non-modifier? (lambda (obj)
+			   ;; returns true iff obj is a non-modifier kie
 			   (and (is-a? obj <kernel-input-event>)
 				(not (or (bi-key? obj) (modifier-only? obj))))))
 
 	  
 	  (stray-release? (lambda (kie)
+			    ;; a stray release is a release without a
+			    ;; corresponding key press; return true
+			    ;; iff obj is stray release.
 			    (not (and
 				  (release? kie)
 				  (any (lambda (kie2)
@@ -136,6 +163,7 @@
 					      (press? kie2)))
 				       (events))))))
 	  (take-ie! (lambda ()
+		      
 		      (let ((cloned-evs (map deep-clone (events))))
 			(cond ((release? (le))
 			       (remove-kie! (le))
@@ -195,7 +223,7 @@
 	 (slot-append! ieh 'nm (le)))
        
        (logln #t "~a\n"
-       		      (<kernel-input-event>->symbol kie))
+       	      (<kernel-input-event>->symbol kie))
               
        (cond
 	;; ((press? (le))
@@ -209,8 +237,9 @@
 	       ((bi-key? (le))
 		(logln #t "case: repeat, bi")
 		(cond ((= (count bi-key? (events)) 2)
-		       (cond ((prefix-key? (le))
-			      (take-ie!)))
+		       ;; TODO: Revist this later
+		       ;; (cond ((prefix-key? (le))
+		       ;; 	      (take-ie!)))
 		       (remove-kie! (le) repeat?)
 		       (if (mod-ie? (le))
 			   (logln #t "case: repeat, bi, na")
