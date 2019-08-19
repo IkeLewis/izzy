@@ -2,6 +2,8 @@
   #:export (<driver> start stop)
   #:use-module (oop goops)
   #:use-module (ice-9 q)
+  ;; Required by guile-2.2
+  #:use-module (ice-9 threads)
   #:use-module (rnrs io ports)
   #:use-module (srfi srfi-1)
   #:use-module (izzy serio-constants)

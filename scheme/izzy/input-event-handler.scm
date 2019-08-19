@@ -3,6 +3,8 @@
   #:use-module (oop goops)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 q)
+  ;; required by guile-2.2
+  #:use-module (ice-9 threads)
   #:use-module (izzy log)
   #:use-module (izzy hid-constants)
   #:use-module (izzy kernel-input-event)
