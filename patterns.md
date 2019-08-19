@@ -26,7 +26,7 @@ both K and the list of modifiers.
 
 Else if K matches <alt>_ <alt>^ <alt>_, then add <kie> to K.
 
-Else if K matches <mo1>_ <mo2>_ ... <mon>_ <bi1>_ <bi2>_, then add <kie> to K.  
+Else if K matches <mo1>_ <mo2>_ ... <mon>_ <bi1>_ <bi2>_, then add <kie> to K.
 
 Otherwise, ignore the repeat.
 
@@ -60,18 +60,17 @@ patterns below)
 ; reset K
 ; disable repeats for <bi2>
 
-<ie> = <m1>_ <m2>_ ... <mn>_ <o1>_ 
-<ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <o1>_ 
+<ie> = <m1>_ <m2>_ ... <mn>_ <o1>_
+<ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <o1>_
 
-<ie> = <alt>_ <alt>^ <alt>_ <alt>^ 
-<ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <bi2>_ (<b-prev2> | <mi>)^ 
+<ie> = <alt>_ <alt>^ <alt>_ <alt>^
+<ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <bi2>_ (<b-prev2> | <mi>)^
 <ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ (<b-prev1> | <mi>)^
 
 <ie> = <m1>_ <m2>_ ... <mn>_ <bi1>t ; remove <bi1>t from K
 <ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <bi2>_ <bi2>t ; remove <bi1>t from K
 
 <ie> = <m1>_ <m2>_ ... <mn>_ <bi1>_ <bi2>_ <bi3>_ ; disable repeats for <bi2>
-
 
 a_ t_ t^ -> C-t
 a_ t_ a^ -> at (remove t from the list of down-keys)
