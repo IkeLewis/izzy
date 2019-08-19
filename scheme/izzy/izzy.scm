@@ -37,29 +37,45 @@ Starts the izzy input handler on the specified device.\n")
 
 (define (main args)
   (if (not (= (length args) 2))
-      (display usage)	     
+      (display usage)
       (izzy (cadr args))))
 
+;; Previously, this list of use-modules expressions was placed within
+;; the first let of the function izzy shown below; however, numerous
+;; compile warnings resulted.  So they were pulled out and placed
+;; here, instead.
+
+(use-modules (oop goops))
+(use-modules (ice-9 q))
+;; required by guile-2.2
+(use-modules (ice-9 threads))
+(use-modules (srfi srfi-1))
+
+(use-modules (izzy customize))
+(use-modules (izzy driver))
+(use-modules (izzy hid-constants))
+(use-modules (izzy kernel-input-event))
+(use-modules (izzy kie-transformer))
+(use-modules (izzy log))
+(use-modules (izzy serio-driver))
+(use-modules (izzy timeval))
+(use-modules (izzy uinject))
+
 (define (izzy device-path)
+  
   (let ()
     ;; (load "/root/.guile")
     ;; (add-sub-dirs-to-load-path
     ;;  "<scheme-dir>")
 
-    (use-modules (oop goops))
-    (use-modules (ice-9 q))
-    (use-modules (srfi srfi-1))
-
-    (use-modules (izzy customize))
-    (use-modules (izzy driver))
-    (use-modules (izzy hid-constants))
-    (use-modules (izzy kernel-input-event))
-    (use-modules (izzy kie-transformer))
-    (use-modules (izzy log))
-    (use-modules (izzy serio-driver))
-    (use-modules (izzy timeval))
-    (use-modules (izzy uinject))
+    ;; This was the previous location of the above list of use-modules
+    ;; expressions.  Unfortuantely, having the use-modules expressions
+    ;; here resulted in compiler warings for many of the public
+    ;; constants defined in hid-constants.scm.
     
+    
+
+
     (let* ((np3 (pipe))
 	   (eq3 (make-q))
 	   (sd3 (make <serio-driver> device-path np3 eq3))
