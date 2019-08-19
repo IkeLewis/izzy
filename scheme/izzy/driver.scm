@@ -76,17 +76,17 @@
 	      (lambda ()
 		(let ((prev-code 0))
 		  (while #t
-		    (let* ((cur-code (read-kernel-input-event dr))
-			   (kie ((conversion-fn dr) prev-code cur-code)))
-		      (when (and (notify-pipe dr)
-				 (event-queue dr))			
-			(enq! (event-queue dr) kie)
-			(write-char #\r (cdr (notify-pipe dr)))
-			(force-output (cdr (notify-pipe dr)))
-			;; (logln #t "0) prev-code: ~a kie: ~a"
-			;; 	       prev-code
-			;; 	       kie)
-			(set! prev-code cur-code)))))))))
+			 (let* ((cur-code (read-kernel-input-event dr))
+				(kie ((conversion-fn dr) prev-code cur-code)))
+			   (when (and (notify-pipe dr)
+				      (event-queue dr))
+			     (enq! (event-queue dr) kie)
+			     (write-char #\r (cdr (notify-pipe dr)))
+			     (force-output (cdr (notify-pipe dr)))
+			     ;; (logln #t "0) prev-code: ~a kie: ~a"
+			     ;; 	       prev-code
+			     ;; 	       kie)
+			     (set! prev-code cur-code)))))))))
 
 (define-method (stop (dr <driver>))
   (when (thread? (slot-ref dr 'main-thread))

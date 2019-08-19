@@ -73,7 +73,7 @@
 				;; command.
 				;; bi-keys-enable-repeat-dflt
 				bi-keys-mod-map-dflt)))
-  
+
   (slot-set! obj 'only-modifiers (fourth initargs))
   (slot-set! obj 'bi-keys (fifth initargs))
   ;;TODO: remove this comment block after successful testing.
@@ -109,7 +109,7 @@
 ;; ordinary keys to the classic modifier keys: ctrl, alt, meta, and
 ;; shift.
 
-				   ;;(cons key-s key-leftmeta)
+;;(cons key-s key-leftmeta)
 (define bi-keys-mod-map-dflt (list (cons key-a key-leftctrl)
 				   (cons key-semicolon key-rightctrl)))
 
@@ -144,7 +144,7 @@
 			    ;; returns true iff obj is a modifier only kie
 			    (and (is-a? obj <kernel-input-event>)
 				 (member (code obj) (only-modifiers ,ieh)))))
-	  (mod-ie? (lambda (kie) 
+	  (mod-ie? (lambda (kie)
 		     ;; returns true iff obj is a modifier kie
 		     (member kie (ms) equal-codes?)))
 
@@ -153,7 +153,7 @@
 			   (and (is-a? obj <kernel-input-event>)
 				(not (or (bi-key? obj) (modifier-only? obj))))))
 
-	  
+
 	  (stray-release? (lambda (kie)
 			    ;; a stray release is a release without a
 			    ;; corresponding key press; return true
@@ -165,7 +165,7 @@
 					      (press? kie2)))
 				       (events))))))
 	  (take-ie! (lambda ()
-		      
+
 		      (let ((cloned-evs (map deep-clone (events))))
 			(cond ((release? (le))
 			       (remove-kie! (le))
@@ -206,7 +206,7 @@
   ;; Reads and collects key-down events until a complete input event
   ;; is obtained.  Then the input event is returned.  All
   ;; non-key-input events are ignored.
-  (with-convenience-funcs 
+  (with-convenience-funcs
    ieh
    (read-char (car (notify-pipe ieh)))
    (let* ((kie (deq! (event-queue ieh))))
@@ -216,17 +216,17 @@
        (when (or (modifier-only? (le))
 		 (mod-ie? (le)))
 	 (slot-append! ieh 'ms (le)))
-       
+
        (when (and (bi-key? (le))
 		  (not (mod-ie? (le))))
 	 (slot-append! ieh 'bis (le)))
 
        (when (non-modifier? (le))
 	 (slot-append! ieh 'nm (le)))
-       
+
        (logln #t "~a\n"
        	      (<kernel-input-event>->symbol kie))
-              
+
        (cond
 	;; ((press? (le))
 	;;  (read-input-event ieh))
@@ -234,12 +234,12 @@
 	((repeat? (le))
 	 (cond ((mod-ie? (le))
 		(logln #t "case: repeat, mod")
-		(remove-kie! (le) repeat?)  
+		(remove-kie! (le) repeat?)
 		(read-input-event ieh))
 	       ((bi-key? (le))
 		(logln #t "case: repeat, bi")
 		(cond ((= (count bi-key? (events)) 2)
-		       ;; TODO: Revist this later
+		       ;; TODO: Revist this later.
 		       ;; (cond ((prefix-key? (le))
 		       ;; 	      (take-ie!)))
 		       (remove-kie! (le) repeat?)
@@ -261,7 +261,7 @@
 		(read-input-event ieh))))
 
 	((release? (le))
-	 (cond	  
+	 (cond
 	  ((stray-release? (le))
 	   (logln #t "case: stray release~a\n" (le))
 	   (remove-kie! (le))
@@ -281,7 +281,7 @@
 	(else
 	 (read-input-event ieh)))))))
 
-;; First attempt to interpret (P, r) using 
+;; First attempt to interpret (P, r) using
 
 ;; If the last member of P has the same code as r, then
 ;; interpret all but the last member of P as modifiers. Otherwise,
@@ -295,9 +295,8 @@
 	     (call-with-new-thread
 	      (lambda ()
 		(while #t
-		  ((callback ieh) (read-input-event ieh)))))))
+		       ((callback ieh) (read-input-event ieh)))))))
 
 (define-method (stop-ieh (ieh <input-event-handler>))
   (when (thread? (slot-ref ieh 'main-thread))
     (cancel-thread (slot-ref ieh 'main-thread))))
-
