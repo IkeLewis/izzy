@@ -28,6 +28,6 @@
 
 (define-method (initialize (obj <serio-driver>) initargs)
   ;; TODO: fix the order of initialized args
-  (set! initargs 
-    (append! (list-head initargs 1) (list ignored-serial-codes serial-codes serio-code->kernel-input-event) (cdr initargs)))
+  (set! initargs
+	(append! (list-head initargs 1) (list ignored-serial-codes serial-codes serio-code->kernel-input-event) (cdr initargs)))
   (next-method))

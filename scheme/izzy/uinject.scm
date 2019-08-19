@@ -19,12 +19,12 @@
 			    (list '*))))
   (define-method (uinject (kie <kernel-input-event>))
     ;; TODO: use aif instead
-     (logln #t "4) uinject kie:~a\n time: ~a\n" (<kernel-input-event>->symbol kie) (time kie))
+    (logln #t "4) uinject kie:~a\n time: ~a\n" (<kernel-input-event>->symbol kie) (time kie))
     (let ((ret (cuinject-wrapper-fn (kernel-input-event->c-struct kie))))
       (if (zero? ret)
 	  ret
 	  ;; TODO: retrieve the error message
-	  (error "uinject returned" ret)))))  
+	  (error "uinject returned" ret)))))
 
 
 ;; Basic conversion to/from c-structs
@@ -35,12 +35,12 @@
 		   ;; (list (seconds (time ie)) (microseconds (time ie)))
 		   ;; instead you MUST generate a new time.
 		   (let ((tv (make <timeval>)))
-		     (list (list (seconds tv) (microseconds tv)) 
-		      (type ie)
-		      (code ie)
-		      (value ie)))))
+		     (list (list (seconds tv) (microseconds tv))
+			   (type ie)
+			   (code ie)
+			   (value ie)))))
 
   (define-method (c-struct->kernel-input-event (c-struct <foreign>))
     (apply make <kernel-input-event> (parse-c-struct c-struct type-desc))))
 
-  ;; Convert integers to symbols
+;; Convert integers to symbols

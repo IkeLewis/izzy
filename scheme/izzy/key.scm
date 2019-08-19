@@ -26,8 +26,8 @@
 
 (define-method (display (k <key>) . args)
   (logln (or (car args) #t) "code: ~a\nmodifer-flag: ~a\n"
-		 (code-name (code k))
-		 (modifier-flag k)))
+	 (code-name (code k))
+	 (modifier-flag k)))
 
 (define-method (to-key-input-events (keys <list>))
   (if (every (lambda (x) (is-a? x <key>)) keys)
@@ -36,7 +36,7 @@
 	(if (null? rest)
 	    (list kie)
 	    (append (list kie) (to-key-input-events rest))))
-      (error "keys must be a list of keys")))  
+      (error "keys must be a list of keys")))
 
 (define-method (keys->list-of-ie-wrapped (keys <list>))
   "Converts a list of keys to a list of wrapped input events."
@@ -69,19 +69,19 @@
 	(map set-key-time!
 	     (apply append
 		    (map make-press-release-input-events
-			 (to-key-input-events keys))))	  
+			 (to-key-input-events keys))))
 	(error "keys must be a list of keys"))))
 
 
 (define (parse-key-input-event keys)
   "Parses a key-input event from the list of keys."
-  (letrec ((helper (lambda (keys2 kie)      
+  (letrec ((helper (lambda (keys2 kie)
 		     (if (every (lambda (x) (is-a? x <key>)) keys2)
 			 (let ((k (if (null? keys2) #f (car keys2))))
 			   (cond ((not k) (error "keys must contain at least one non-modifier"))
 				 ((not (modifier-flag k))
 				  (values (append kie (list k)) (cdr keys2)))
-				 (else	      
+				 (else
 				  (helper (cdr keys2) (append kie (list k))))))
 			 (error "keys must be a list of keys")))))
     (helper keys '())))

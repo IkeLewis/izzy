@@ -31,7 +31,7 @@
 	      (slot-set! obj var val))
 	    (list 'bi-keys)
 	    (append initargs (list bi-keys-dflt)))
-  
+
   (slot-set! obj 'state 0)
   (slot-set! obj 'bi #f)
   (slot-set! obj 's1 #f)
@@ -55,7 +55,7 @@
 		      (slot-set! ,bi-tr 's1 #f)
 		      (slot-set! ,bi-tr 'events '())
 		      ev))))
-     ;; Unfortunately, this macro does not handle 
+     ;; Unfortunately, this macro does not handle
      ,@body))
 
 (define-method (next-state (bi-tr <bi-kie-transformer>)
@@ -125,7 +125,7 @@
 		   (case t
 		     ((0) (reset!))
 		     ((1)
-		      (slot-set! bi-tr 'bi kie) 	  
+		      (slot-set! bi-tr 'bi kie)
 		      '())))
 		  ((1)
 		   (append-to-events! kie)
@@ -198,8 +198,8 @@
 					 (make <bi-kie-transformer>)
 					 (make <kie-transformer>))))
 
-;; (transform-st! 
-;;			   
+;; (transform-st!
+;;
 
 
 

@@ -88,7 +88,7 @@
 ;; (define bi-keys-mod-map-dflt (list (cons key-a key-leftctrl)
 ;; 				   (cons key-semicolon key-rightctrl)))
 
- 
+
 ;; (define-method (allowed-modifiers (ieh <input-event-handler>))
 ;;   "These are the keys that may be used as modifiers."
 ;;   (append (only-modifiers ieh) (bi-keys ieh)))

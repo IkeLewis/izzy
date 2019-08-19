@@ -428,7 +428,7 @@
 		     key-max
 		     key-cnt))
 
-(define event-names '(ev-syn 
+(define event-names '(ev-syn
 		      ev-key
 		      ev-rel
 		      ev-abs

@@ -19,7 +19,7 @@
 (define-method (initialize (obj <timeval>) initargs)
   (let ((time (if (null? initargs)
 		  (gettimeofday)
-		  (cons (car initargs) (cadr initargs)))))      
+		  (cons (car initargs) (cadr initargs)))))
     (slot-set! obj 'seconds (car time))
     (slot-set! obj 'microseconds (cdr time))))
 

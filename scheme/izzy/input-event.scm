@@ -22,10 +22,10 @@
   ;;   (error "The last argument must be a non-modifier"))
   (unless (<= (length initargs) 2)
     (error "Too many args"))
-  
+
   (when (= (length initargs) 1)
     (set! initargs (cons '() initargs)))
-  
+
   (let ((to-kie (lambda (ia)
 		  (cond ((is-a? ia <integer>)
 			 (make <kernel-input-event> ev-key ia key-press))
@@ -39,7 +39,7 @@
 (define-method (input-event->list<kernel-input-event> (obj <input-event>))
   (let* ((presses (append (modifiers obj) (list (non-modifier obj))))
 	 (releases (map deep-clone presses))
-	 
+
 	 (next-time (let* ((time-between-input-events (make <timeval> 0 30000))
 			   (end-time (make <timeval>))
 			   (cur-time (- end-time
@@ -59,6 +59,6 @@
 (define-method (display (ie <input-event>) . args)
   (set! args (append args (list #t)))
   (logln (second args)
-		 "(modifiers:~a\nnon-modifier:~a)\n"
-		 (modifiers ie)
-		 (non-modifier ie)))
+	 "(modifiers:~a\nnon-modifier:~a)\n"
+	 (modifiers ie)
+	 (non-modifier ie)))

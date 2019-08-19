@@ -5,49 +5,49 @@
   #:use-module (srfi srfi-1)
   #:use-module (oop goops)
   #:use-module (izzy log)
-  #:use-module (system foreign))  
-  
-  (define-class <kernel-input-event> ()
-    ;;  "A wrapper class for input events (c-structs)."    
-    (time #:init-value #f #:accessor time)
-    (type #:init-value 0 #:accessor type) ;; ev-key, ...
-    (code #:init-value 0 #:accessor code)   ;; e.g. key-a
-    (value #:init-value 0 #:accessor value) ;; key-press, ...
-    (modifier? #:init-value #f #:accessor modifier?))
+  #:use-module (system foreign))
+
+(define-class <kernel-input-event> ()
+  ;;  "A wrapper class for input events (c-structs)."
+  (time #:init-value #f #:accessor time)
+  (type #:init-value 0 #:accessor type) ;; ev-key, ...
+  (code #:init-value 0 #:accessor code)   ;; e.g. key-a
+  (value #:init-value 0 #:accessor value) ;; key-press, ...
+  (modifier? #:init-value #f #:accessor modifier?))
 
 (define-method (equal-codes? (obj <kernel-input-event>) (obj2 <kernel-input-event>))
   (= (code obj) (code obj2)))
 
-  (define-method (initialize (obj <kernel-input-event>) initargs)
-    ;; The args are initialized in the following order: time, type,
-    ;; code, value, repeat-count, modifier?.
-    
-    (set! initargs (append (cond ((null? initargs)
-				  (cons (make <timeval>) initargs))
-				 ((is-a? (car initargs) <list>)
-				  (cons (apply make <timeval> (list-ref initargs 0)) initargs))
-				 ((is-a? (car initargs) <timeval>)
-				  initargs)
-				 (else
-				  (cons (make <timeval>) initargs)))
-			   (list 0 0 0 #f)))
-    
-    (for-each (lambda (var val)
-		(slot-set! obj var val))
-	      (list 'time 'type 'code 'value 'modifier?)
-	      initargs)
-    
-    (unless (boolean? (modifier? obj))
-      (slot-set! obj 'modifier? #f)))
+(define-method (initialize (obj <kernel-input-event>) initargs)
+  ;; The args are initialized in the following order: time, type,
+  ;; code, value, repeat-count, modifier?.
+
+  (set! initargs (append (cond ((null? initargs)
+				(cons (make <timeval>) initargs))
+			       ((is-a? (car initargs) <list>)
+				(cons (apply make <timeval> (list-ref initargs 0)) initargs))
+			       ((is-a? (car initargs) <timeval>)
+				initargs)
+			       (else
+				(cons (make <timeval>) initargs)))
+			 (list 0 0 0 #f)))
+
+  (for-each (lambda (var val)
+	      (slot-set! obj var val))
+	    (list 'time 'type 'code 'value 'modifier?)
+	    initargs)
+
+  (unless (boolean? (modifier? obj))
+    (slot-set! obj 'modifier? #f)))
 
 (define-method (display (kie <kernel-input-event>) . args)
   (logln (or (car args) #t) "(time: ~a code: ~a code-name: ~a value: ~a type: ~a modifier?: ~a)\n"
-	   (time kie)
-	   (code kie)
-	   (hid-con-code-name (code kie))
-	   (value kie)
-	   (type kie)
-	   (modifier? kie))
+	 (time kie)
+	 (code kie)
+	 (hid-con-code-name (code kie))
+	 (value kie)
+	 (type kie)
+	 (modifier? kie))
   ;;
   ;; (let ((code-name-ie (hid-con-code-name (code ie)))
   ;; 	  (type-name-ie (hid-con-type-name (type ie)))
