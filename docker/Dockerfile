@@ -14,11 +14,11 @@
 FROM debian
 
 RUN apt-get update && \
-    apt-get -y install gcc git guile-2.0 make && \
+    apt-get -y install gcc git guile-2.0 guile-2.2 make && \
     cd ~ && \
-    mkdir izzy-test && \
-    cd izzy-test && \
+    git clone https://github.com/IkeLewis/izzy.git && \
+    cd /root/izzy/test && \
     mkfifo kie-pipe && \
-    git clone https://github.com/IkeLewis/izzy.git
+    touch unix-server-socket
 
-ENTRYPOINT [ "/root/izzy-test/izzy/docker/test.sh" ]
+ENTRYPOINT [ "/root/izzy/docker/test.sh" ]
