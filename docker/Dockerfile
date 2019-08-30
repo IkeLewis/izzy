@@ -1,16 +1,16 @@
-# BUILD: 
+# BUILD:
 #
 # $ cd /path-to-izzy-repo/docker
-# $ docker build -t debian-izzy .
+# $ docker build --tag=ikelewis/debian-izzy .
 #
 # TEST RUN:
 #
-# $ docker run --rm -it --name debian-izzy debian-izzy
-# 
+# $ docker run --rm -it --name ikelewis--debian-izzy ikelewis/debian-izzy
+#
 # DEV RUN:
 #
 # $ docker run --rm -it -v /path-to-izzy-repo/:/root/izzy:Z --name \
-# debian-izzy debian-izzy
+# ikelewis--debian-izzy ikelewis/debian-izzy
 
 FROM debian
 
