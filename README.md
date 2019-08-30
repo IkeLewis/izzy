@@ -2,10 +2,10 @@ IZZY
 ====
 
 Izzy is a project that may enable more efficient use of a traditional
-keyboard.  It could be used in call centers, development environment,
-etc.  The project grew out of my own frustration (in 2016, I believe)
-with entering Emacs commands which tend to use many control and alt
-(or meta) key sequences.
+keyboard.  It could be used in call centers, development environments,
+etc.  The project grew out of my own frustration with entering Emacs
+commands which tend to use many control and alt (or meta) key
+sequences.
 
 Licensing
 ---------
@@ -14,25 +14,76 @@ Licensing has not yet been established for the project and will depend
 on a variety of factors; most likely, it will be free for
 non-commercial use.
 
-Izzy is Complementary to Auto Hot Key (AHK)!
---------------------------------------------
+How Izzy Works
+--------------
 
-There has been some confusion about how izzy works.  One of the early
-design goals of izzy is to leverage existing mature input handling
-software like AHK.  Izzy operates at a lower level than AHK and is
-thus entirely complementary to it.  The flow diagram below shows how
-input can be processed on my prototype system:
+The flow diagram below shows how izzy processes input on my prototype
+system.
 
 PS2 Device -\>
-Raw PS/2 Driver -\>
+Linux Raw PS/2 Driver -\>
 izzy -\>
-AHK, Emacs, vi, etc
+Emacs, VIM, Auto Hot Key (AHK), etc
 
-Reviewers
----------
+After a user presses a key on a PS/2 keyboard, an input event is
+written to a device file by the Linux kernel.  Izzy reads the input
+event from the raw device's file descriptor, and then dispatches it to
+handlers, which may in turn transform it and then forward the
+resulting input event to other applications such as Emacs, VIM, AHK,
+etc.
 
-This project has been kindly reviewed at least in part by Dan S. of
-DXC and David L. of Carbonite.
+Windows Users
+-------------
+
+Currently, izzy is designed to run only on Linux.  However, it is
+still possible (in theory) to use izzy with Windows.  One potential
+solution is to connect a Raspberry Pi (running izzy) to an Arduino
+(configured as a USB input forwarding device).  (This approach is
+likely overly complex; hopefully, it is also possible to simply use
+just a Raspberry Pi.)
+
+Keyboard
+\|
+Raspberry Pi (running izzy)
+\|
+Arduino (configured as a USB input forwarding device)
+\|
+Windows Computer
+
+One advantage of using izzy in this way is that no software needs to
+be installed on the Windows computer.  A downside of this approach is
+that access to the Raspberry Pi is required to update izzy or to add a
+new handler, which may be less convenient.
+
+Ideas for Improving Code Quality
+--------------------------------
+
+Add clarifying comments to the code.
+
+Perform extensive pseudo-randomized testing.
+
+Consider adding additional type checking.
+
+Consider using a more robust typing system.
+
+Consider specifying some requirements of izzy in higher order logic.
+
+Early Design Goals
+------------------
+
+Simplicity
+
+Modularity
+
+Allow input handlers to be added dynamically in languages other than
+scheme
+
+Allow ordinary keys to be used as modifiers
+
+Allow users to leverage existing input handling software like Auto Hot
+Key (AHK)
+
+Embrace the Linux/UNIX design philosophy
 
 Notation
 --------
@@ -56,51 +107,22 @@ held down to enter multiple A's.  Instead, a simple key sequence (as
 is used in Emacs) could be used to repeat a key; for example alt_ 1 0
 0 alt* A, could be used to quickly enter 100 A's.
 
-How Input Events are Currently Handled
---------------------------------------
+Installation
+------------
+TODO
 
-The current process flow for input events is quite simple:
-
-1) an input event is read from the keyboard using libread_ie.
-2) the input event is transformed via scheme
-3) the transformed input event is injected via a call to libuinject.
-
-Note, I haven't looked at the above code in some time, so the 3 steps
-may not be 100% accurate.
-
-Current Design
+Launching Izzy
 --------------
+izzy.scm [-allow-stale-input] <input-device-path> <unix-socket-path>
 
-Unfortunately, the current design is suboptimal; better designs exist
-and may be implemented; whether or not such designs will be
-implemented depends on the interests of potential stakeholders and the
-open source community, of course.
+Start an izzy server for the specified input device listening for
+connections on `unix-socket-path'.
 
-Towards a better design
------------------------
+Reviewers
+---------
 
-Each handler connects to the dispatcher.
-After the handler authenticates itself to the dispatcher, it is
-appended to the list of handlers.
-Once an input event is received it is placed in the queue.
-The dispatcher removes the first input event from the queue and sends
-it to each handler on the list.
-Each handler can then choose to ignore, observe, or handle the input
-event.
-
-Key benefits of this approach:
-Multiple applications could receive/respond to the same input event,
-if desired.
-Handlers can be written in any programming language, not just scheme.
-Handlers are required to authenticate over an encrypted connection.
-New handlers can be added on the fly without disrupting existing
-production code.
-Basic logging/auditing could be implemented via a handler.
-
-Higher Level Features
----------------------
-Support for keymaps and macros could be implemented via separate
-modules.
+This project has been kindly reviewed at least in part by Dan S. of
+DXC and David L. of Carbonite.
 
 Dedication
 ----------
@@ -108,11 +130,3 @@ Dedication
 The project is inspired by and dedicated to my late aunt Izzy Sanders
 who let me use her computer before I had one of my own and who
 encouraged me to pursue a career in IT as a youth.
-
-About Me
---------
-
-Although many significant people in my life passed away long ago,
-some days it feels like they just passed. Currently I'm struggling
-with anxiety and depression, and I'm seeking treatment.  Thoughts and
-prayers are greatly appreciated.
