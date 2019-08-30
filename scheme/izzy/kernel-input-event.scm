@@ -47,42 +47,25 @@
 	 (hid-con-code-name (code kie))
 	 (value kie)
 	 (type kie)
-	 (modifier? kie))
-  ;;
-  ;; (let ((code-name-ie (hid-con-code-name (code ie)))
-  ;; 	  (type-name-ie (hid-con-type-name (type ie)))
-  ;; 	  (value-name-ie (hid-con-value-name (value ie)))
-  ;; 	  (time0 (time ie))
-  ;; 	  (tn (type-name ie)))
-  ;;   (apply logln (or (car args) #t) "~a\ntype: ~a\ncode: ~a\nvalue: ~a\n"
-  ;; 	     (case tn
-  ;; 	       ((ev-key) (list time0
-  ;; 			       ;; Interpret the type as a type name
-  ;; 			       tn
-  ;; 			       ;; Interpret the code as a code name
-  ;; 			       code-name-ie
-  ;; 			       ;; Interpret the value as a press/release/repeat
-  ;; 			       value-name-ie))
-  ;; 	       ((ev-msc) (list time0
-  ;; 			       ;; Interpret both the type and the code as type names
-  ;; 			       tn
-  ;; 			       (hid-con-type-name (code ie))
-  ;; 			       ;; Interpret the value as a code name
-  ;; 			       (hid-con-code-name (value ie))))
-  ;; 	       ((ev-syn) (list time0
-  ;; 			       ;; Interpret the type, code, and value as type names
-  ;; 			       tn
-  ;; 			       (hid-con-type-name (code ie))
-  ;; 			       (hid-con-type-name (value ie))))
-  ;; 	       ;; Otherwise don't interpret anything
-  ;; 	       (else (list (time ie)
-  ;; 			   (code ie)
-  ;; 			   (value ie)
-  ;; 			   (type ie))))))
-  )
+	 (modifier? kie)))
+
+(define-method (write (kie <kernel-input-event>) . args)
+  (apply write
+	 (simple-format #f
+			"(time: ~s code: ~s code-name: ~s value: ~s
+value-name: ~s type: ~s type-name: ~s modifier?: ~s)"
+			(time kie)
+			(code kie)
+			(hid-con-code-name (code kie))
+			(value kie)
+			(hid-con-value-name (value kie))
+			(type kie)
+			(hid-con-type-name (type kie))
+			(modifier? kie))
+	 args))
 
 (define-method (release? (kie <kernel-input-event>))
-  (= (value kie) hid-con-key-release))
+   (= (value kie) hid-con-key-release))
 
 (define-method (press? (kie <kernel-input-event>))
   (= (value kie) hid-con-key-press))
