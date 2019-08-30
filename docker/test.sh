@@ -12,4 +12,4 @@ make
 make install
 # Does the guile code compile and pass unit testing?
 cd /root/izzy/scheme
-izzy/izzy.scm -allow-stale-input /root/izzy/test/canned-input /root/izzy/test/unix-server-socket
+izzy/izzy.scm -allow-stale-input /root/izzy/test/usb-canned-input /root/izzy/test/unix-server-socket
