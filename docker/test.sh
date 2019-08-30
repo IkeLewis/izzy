@@ -1,20 +1,15 @@
 #!/bin/bash -ex
 
-# First test: does it compile?
-cd /root/izzy-test
+# Does the C code compile?
+cd /root/izzy
 if [ ! -d lib ]; then
     mkdir lib
 fi
 # Does the C code compile?
-cd /root/izzy-test/izzy/src
+cd /root/izzy/src
 make clean
 make
 make install
-# Does the guile code compile?
-cd /root/izzy-test/izzy/scheme
-izzy/izzy.scm /root/izzy-test/kie-pipe
-
-
-
-
-
+# Does the guile code compile and pass unit testing?
+cd /root/izzy/scheme
+izzy/izzy.scm -allow-stale-input /root/izzy/test/canned-input /root/izzy/test/unix-server-socket
