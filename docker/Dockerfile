@@ -1,5 +1,3 @@
-# Dedicated to my aunt Izzy; I love and miss her a lot.
-#
 # BUILD: docker build -t debian-izzy .
 #
 # TEST RUN:
@@ -8,8 +6,8 @@
 #
 # DEV RUN:
 #
-# docker run --rm -it -v /home/q/izzy:/root/izzy-test/izzy:Z --name
-# debian-izzy debian-izzy
+# docker run --rm -it -v /home/q/izzy:/root/izzy:Z --name debian-izzy
+# debian-izzy
 
 FROM debian
 
