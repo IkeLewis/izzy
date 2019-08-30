@@ -17,7 +17,7 @@ clean:
 	rm -rf *~ $(shared) $(mains)
 
 install: 
-	rm ../lib/lib*
+	rm -f ../lib/lib*
 	cp lib*.so ../lib/
 
 .PHONY: all clean install
