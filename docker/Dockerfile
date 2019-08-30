@@ -2,14 +2,14 @@
 #
 # $ cd /path-to-izzy-repo/docker
 # $ docker build -t debian-izzy .
-$
+#
 # TEST RUN:
 #
 # $ docker run --rm -it --name debian-izzy debian-izzy
 # 
 # DEV RUN:
 #
-# $ docker run --rm -it -v /home/q/izzy:/root/izzy:Z --name \
+# $ docker run --rm -it -v /path-to-izzy-repo/:/root/izzy:Z --name \
 # debian-izzy debian-izzy
 
 FROM debian
