@@ -6,12 +6,6 @@
 
 (define-class <timeval> ())
 
-;; (define-method (set-seconds! (tv <timeval>) (secs <number>))
-;;   (hash-set! tvht (pointer-address (scm->pointer tv)) secs))
-
-;; (define-method (get-seconds (tv <timeval>))
-;;   (or (hash-ref tvht (pointer-address (scm->pointer tv))) 0))
-
 (define-class <timeval> ()
   (seconds #:init-value 0 #:accessor seconds)
   (microseconds #:init-value 0 #:accessor microseconds))
@@ -41,8 +35,6 @@
 		       (timeval->int t2)))
       (error "first timeval must not be less than the second")))
 
-
-
 (define-method (+ (t1 <timeval>) (t2 <timeval>))
   (int->timeval (+ (timeval->int t1)
 		   (timeval->int t2))))
@@ -55,14 +47,17 @@
 (define-method (* (tv <timeval>) (n <number>))
   (* n tv))
 
-
 ;; (define-method (* (n <number>) (tv <timeval>))
 ;;   (if (<= 0 n)
 ;;       (int->timeval (* n (timeval->int tv)))
 ;;       (error "n must be a non-negative integer")))
 
-
 (define-method (display (tv <timeval>) . args)
   (logln (or (car args) #t) "(seconds: ~a microseconds: ~a)"
 	 (seconds tv)
 	 (microseconds tv)))
+
+(define-method (write (tv <timeval>) . args)
+  (apply write
+	 `(seconds: ,(seconds tv) microseconds: ,(microseconds tv))
+	 args))
