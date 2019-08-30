@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/IkeLewis/izzy.svg?branch=master)](https://travis-ci.org/IkeLewis/izzy)
+
 IZZY
 ====
 
@@ -58,32 +60,32 @@ new handler, which may be less convenient.
 Ideas for Improving Code Quality
 --------------------------------
 
-Add clarifying comments to the code.
+* Add clarifying comments to the code.
 
-Perform extensive pseudo-randomized testing.
+* Perform extensive pseudo-randomized testing.
 
-Consider adding additional type checking.
+* Consider adding additional type checking.
 
-Consider using a more robust typing system.
+* Consider using a more robust typing system.
 
-Consider specifying some requirements of izzy in higher order logic.
+* Consider specifying some requirements of izzy in higher order logic.
 
 Early Design Goals
 ------------------
 
-Simplicity
+* Simplicity
 
-Modularity
+* Modularity
 
-Allow input handlers to be added dynamically in languages other than
+* Allow input handlers to be added dynamically in languages other than
 scheme
 
-Allow ordinary keys to be used as modifiers
+* Allow ordinary keys to be used as modifiers
 
-Allow users to leverage existing input handling software like Auto Hot
+* Allow users to leverage existing input handling software like Auto Hot
 Key (AHK)
 
-Embrace the Linux/UNIX design philosophy
+* Embrace the Linux/UNIX design philosophy
 
 Notation
 --------
@@ -113,7 +115,10 @@ TODO
 
 Launching Izzy
 --------------
-izzy.scm [-allow-stale-input] <input-device-path> <unix-socket-path>
+
+```
+$ izzy.scm [-allow-stale-input] \<input-device-path\> \<unix-socket-path\>
+```
 
 Start an izzy server for the specified input device listening for
 connections on `unix-socket-path'.
