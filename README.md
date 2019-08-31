@@ -22,10 +22,10 @@ How Izzy Works
 The flow diagram below shows how izzy processes input on my prototype
 system.
 
-PS2 Device -\>
-Linux Raw PS/2 Driver -\>
-izzy -\>
-Emacs, VIM, Auto Hot Key (AHK), etc
+PS2 Device -\><br>
+Linux Raw PS/2 Driver -\><br>
+izzy -\><br>
+Emacs, VIM, Auto Hot Key (AHK), etc<br>
 
 After a user presses a key on a PS/2 keyboard, an input event is
 written to a device file by the Linux kernel.  Izzy reads the input
@@ -44,13 +44,13 @@ solution is to connect a Raspberry Pi (running izzy) to an Arduino
 likely overly complex; hopefully, it is also possible to simply use
 just a Raspberry Pi.)
 
-Keyboard
-\|
-Raspberry Pi (running izzy)
-\|
-Arduino (configured as a USB input forwarding device)
-\|
-Windows Computer
+Keyboard<br>
+\|<br>
+Raspberry Pi (running izzy)<br>
+\|<br>
+Arduino (configured as a USB input forwarding device)<br>
+\|<br>
+Windows Computer<br>
 
 One advantage of using izzy in this way is that no software needs to
 be installed on the Windows computer.  A downside of this approach is
@@ -90,9 +90,9 @@ Key (AHK)
 Notation
 --------
 
-\<key\>_ : the key has been pressed down
-\<key\>  : the key has been pressed and released
-\<key\>* : the key has been released
+\<key\>_ : the key has been pressed down<br>
+\<key\>  : the key has been pressed and released<br>
+\<key\>* : the key has been released<br>
 
 Ordinary Keys May be Used as Modifiers
 --------------------------------------
