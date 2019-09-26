@@ -13,8 +13,35 @@ Licensing
 ---------
 
 Licensing has not yet been established for the project and will depend
-on a variety of factors; most likely, it will be free for
-non-commercial use.
+on a variety of factors.  At this point, both commercial and
+non-commercial use are strictly prohibited without my expressed
+written consent and a valid product key.
+
+Disclaimer
+----------
+
+There is no warranty for the program, to the extent permitted by
+applicable law.  Except when otherwise stated in writing the copyright
+holders and/or other parties provide the program “as is” without
+warranty of any kind, either expressed or implied, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose.  The entire risk as to the quality and
+performance of the program is with you.  Should the program prove
+defective, you assume the cost of all necessary servicing, repair or
+correction.
+
+Limitation of Liability
+-----------------------
+
+In no event unless required by applicable law or agreed to in writing
+will any copyright holder, or any other party who modifies and/or
+conveys the program as permitted above, be liable to you for damages,
+including any general, special, incidental or consequential damages
+arising out of the use or inability to use the program (including but
+not limited to loss of data or data being rendered inaccurate or
+losses sustained by you or third parties or a failure of the program
+to operate with any other programs), even if such holder or other
+party has been advised of the possibility of such damages.
 
 How Izzy Works
 --------------
@@ -33,6 +60,31 @@ event from the raw device's file descriptor, and then dispatches it to
 handlers, which may in turn transform it and then forward the
 resulting input event to other applications such as Emacs, VIM, AHK,
 etc.
+
+Towards USB Support
+-------------------
+
+Currently, there are at least three different approaches to
+implementing USB support:
+
+1. Modify a USB HID Boot Protocol keyboard driver [4](#4).
+
+2. Modify a generic USB driver [5](#5).
+
+3. Implement a driver on top of the raw USB driver [6](#6).
+
+Each of the above approaches has it's pros and cons; the first
+approach requires the least implementation effort but won't work with
+keyboards and keypads that don't support the USB boot protocol.  The
+second approach would allow the use of keyboards and keypads that
+don't support the USB boot protocol but would require removing code
+that isn't for USB keyboards and keypads (e.g. code for mice, pens,
+touchscreens, touch pads, system controls, consumer controls, wireless
+radio controls, and system-multi axis devices).  The third approach
+would likely result in the highest quality driver, but could require
+considerable implementation effort.  Since the vast majority of
+keyboards support the USB Boot Protocol, it is my opinion that the
+first approach should be taken.
 
 Windows Users
 -------------
@@ -117,7 +169,7 @@ Launching Izzy
 --------------
 
 ```
-$ izzy.scm [-allow-stale-input] \<input-device-path\> \<unix-socket-path\>
+$ izzy.scm [-allow-stale-input] <input-device-path> <unix-socket-path>
 ```
 
 Start an izzy server for the specified input device listening for
@@ -135,3 +187,28 @@ Dedication
 The project is inspired by and dedicated to my late aunt Izzy Sanders
 who let me use her computer before I had one of my own and who
 encouraged me to pursue a career in IT as a youth.
+
+
+<a name="references"></a>References
+-----------------------------------
+
+1. <a name="1"></a> [Device Class Definition for HID 1.11]
+(https://www.usb.org/document-library/device-class-definition-hid-111)
+
+2. <a name="2"></a> [Human Interface Devices (HID)]
+(https://www.kernel.org/doc/html/latest/hid/index.html)
+
+3. <a name="3"></a> [The Linux Input Documentation]
+(https://www.kernel.org/doc/html/latest/input/index.html)
+
+4. <a name="4"></a> [A Linux USB HID Boot Protocol Driver (usbkbd.c)]
+(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/usbhid/usbkbd.c?h=v5.3.1)
+
+5. <a name="5"></a> [A Linux Generic HID Input Driver (hid-input.c)]
+(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hid-input.c?h=v5.3.1)
+
+6. <a name="6"</a> [A Linux Raw HID Driver (hidraw.c)]
+(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hidraw.c?h=v5.3.1)
+
+7. <a name="7"></a> [A Linux Raw Driver for Serial Input Devices]
+(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/input/serio/serio_raw.c?h=v5.3.1)
