@@ -192,23 +192,23 @@ encouraged me to pursue a career in IT as a youth.
 <a name="references"></a>References
 -----------------------------------
 
-1. <a name="1"></a> [Device Class Definition for HID 1.11]
-(https://www.usb.org/document-library/device-class-definition-hid-111)
+1. <a name="1"></a> Device Class Definition for HID 1.11
+https://www.usb.org/document-library/device-class-definition-hid-111
 
-2. <a name="2"></a> [Human Interface Devices (HID)]
-(https://www.kernel.org/doc/html/latest/hid/index.html)
+2. <a name="2"></a> Human Interface Devices (HID)
+https://www.kernel.org/doc/html/latest/hid/index.html
 
-3. <a name="3"></a> [The Linux Input Documentation]
-(https://www.kernel.org/doc/html/latest/input/index.html)
+3. <a name="3"></a> The Linux Input Documentation
+https://www.kernel.org/doc/html/latest/input/index.html
 
-4. <a name="4"></a> [A Linux USB HID Boot Protocol Driver (usbkbd.c)]
-(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/usbhid/usbkbd.c?h=v5.3.1)
+4. <a name="4"></a> A Linux USB HID Boot Protocol Driver (usbkbd.c)
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/usbhid/usbkbd.c?h=v5.3.1
 
-5. <a name="5"></a> [A Linux Generic HID Input Driver (hid-input.c)]
-(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hid-input.c?h=v5.3.1)
+5. <a name="5"></a> A Linux Generic HID Input Driver (hid-input.c)
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hid-input.c?h=v5.3.1
 
-6. <a name="6"</a> [A Linux Raw HID Driver (hidraw.c)]
-(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hidraw.c?h=v5.3.1)
+6. <a name="6"></a> A Linux Raw HID Driver (hidraw.c)
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hidraw.c?h=v5.3.1
 
-7. <a name="7"></a> [A Linux Raw Driver for Serial Input Devices]
-(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/input/serio/serio_raw.c?h=v5.3.1)
+7. <a name="7"></a> A Linux Raw Driver for Serial Input Devices
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/input/serio/serio_raw.c?h=v5.3.1
