@@ -5,9 +5,7 @@ IZZY
 
 Izzy is a project that may enable more efficient use of a traditional
 keyboard.  It could be used in call centers, development environments,
-etc.  The project grew out of my own frustration with entering Emacs
-commands which tend to use many control and alt (or meta) key
-sequences.
+etc.
 
 Licensing
 ---------
@@ -42,6 +40,15 @@ not limited to loss of data or data being rendered inaccurate or
 losses sustained by you or third parties or a failure of the program
 to operate with any other programs), even if such holder or other
 party has been advised of the possibility of such damages.
+
+Definition of a Bug
+-------------------
+
+A function is said to contain a bug iff that function does not satisfy
+its specification.  A function whose implementation satisfies its
+specification but that has undesirable behavior does NOT contain a
+bug.  Instead, such a function is considered to have an error in its
+specification.
 
 How Izzy Works
 --------------
@@ -90,24 +97,21 @@ Windows Users
 -------------
 
 Currently, izzy is designed to run only on Linux.  However, it is
-still possible (in theory) to use izzy with Windows.  One potential
-solution is to connect a Raspberry Pi (running izzy) to an Arduino
-(configured as a USB input forwarding device).  (This approach is
-likely overly complex; hopefully, it is also possible to simply use
-just a Raspberry Pi.)
+still possible (in theory) to use izzy with Windows; one potential
+solution is to connect a Raspberry Pi (Zero) that is running izzy and
+configured as an HID device directly to the windows computer.
 
 Keyboard<br>
 \|<br>
-Raspberry Pi (running izzy)<br>
-\|<br>
-Arduino (configured as a USB input forwarding device)<br>
+Raspberry Pi (Zero) running izzy <br>
 \|<br>
 Windows Computer<br>
 
 One advantage of using izzy in this way is that no software needs to
 be installed on the Windows computer.  A downside of this approach is
 that access to the Raspberry Pi is required to update izzy or to add a
-new handler, which may be less convenient.
+new handler, which may be less convenient.  Some more advanced
+approaches may not have this particular limitation.
 
 Ideas for Improving Code Quality
 --------------------------------
@@ -187,7 +191,6 @@ Dedication
 The project is inspired by and dedicated to my late aunt Izzy Sanders
 who let me use her computer before I had one of my own and who
 encouraged me to pursue a career in IT as a youth.
-
 
 <a name="references"></a>References
 -----------------------------------
